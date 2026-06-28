@@ -11,7 +11,7 @@ import { buildSystemPrompt } from "./src/utils/promptBuilder";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 const JWT_SECRET = process.env.JWT_SECRET || "vidya-deep-secret-token-key-2026-06";
 const DATA_DIR = path.join(process.cwd(), "data");
