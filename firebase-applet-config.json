@@ -1,10 +1,10 @@
 {
-  "projectId": "operating-rush-lxqhd",
-  "appId": "1:383513790952:web:ec59415befed47eff6bc5d",
-  "apiKey": "AIzaSyBOp8xjh2ih8WlZmexa34XX_ehLCTQRpzo",
-  "authDomain": "operating-rush-lxqhd.firebaseapp.com",
+  "projectId": "vidyaai-f38e1",
+  "appId": "1:638729047283:web:16a75ac80982c5db8c7b86",
+  "apiKey": "AIzaSyCUN_8MiUCcPCYYbT20vC0tEcvvNpiYu9I",
+  "authDomain": "vidyaai-f38e1.firebaseapp.com",
   "firestoreDatabaseId": "remixed-firestore-database-id",
-  "storageBucket": "operating-rush-lxqhd.firebasestorage.app",
-  "messagingSenderId": "383513790952",
-  "measurementId": ""
+  "storageBucket": "vidyaai-f38e1.firebasestorage.app",
+  "messagingSenderId": "638729047283",
+  "measurementId": "G-NX546D5J1H"
 }
