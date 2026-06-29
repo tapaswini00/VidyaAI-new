@@ -1,0 +1,9 @@
+{
+  "appId": "com.vidyaai.app",
+  "appName": "VidyaAI",
+  "webDir": "dist",
+  "server": {
+    "url": "https://vidyaai-new-production.up.railway.app",
+    "cleartext": false
+  }
+}
