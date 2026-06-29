@@ -166,20 +166,20 @@ async function generateContentWithRetry(params: any, options: { maxRetries?: num
   const { maxRetries = 3, initialDelayMs = 800 } = options;
   let lastError: any = null;
 
-  const primaryModel = params.model || "gemini-3.5-flash";
+  const primaryModel = params.model || "gemini-2.5-flash";
   const modelsToTry: string[] = [];
 
   // Determine priority of models. Try the requested model first.
-  if (primaryModel === "gemini-3.1-pro-preview") {
-    modelsToTry.push("gemini-3.1-pro-preview");
-    modelsToTry.push("gemini-3.5-flash");
-    modelsToTry.push("gemini-3.1-flash-lite");
+  if (primaryModel === "gemini-2.5-pro") {
+    modelsToTry.push("gemini-2.5-pro");
+    modelsToTry.push("gemini-2.5-flash");
+    modelsToTry.push("gemini-2.0-flash-lite");
   } else {
     modelsToTry.push(primaryModel);
-    if (primaryModel !== "gemini-3.5-flash") {
-      modelsToTry.push("gemini-3.5-flash");
+    if (primaryModel !== "gemini-2.5-flash") {
+      modelsToTry.push("gemini-2.5-flash");
     }
-    modelsToTry.push("gemini-3.1-flash-lite");
+    modelsToTry.push("gemini-2.0-flash-lite");
     modelsToTry.push("gemini-flash-latest");
   }
 
@@ -212,13 +212,13 @@ async function generateContentWithRetry(params: any, options: { maxRetries?: num
 
         // Graceful paid-key fallback: 
         // If a paid/pro model fails with a 403 (unauthorized/paid tier issue), immediately rotate to standard free model
-        if (is403 && model === "gemini-3.1-pro-preview") {
-          console.log(`[Gemini Shift] Model gemini-3.1-pro-preview is busy/unauthorized, switching immediately to free tier models...`);
+        if (is403 && model === "gemini-2.5-pro") {
+          console.log(`[Gemini Shift] Model gemini-2.5-pro is busy/unauthorized, switching immediately to free tier models...`);
           break; // Break active loop for this model, rotate to next
         }
 
         // If it's a static 400 or 403 error for standard model, don't retry, throw or move to rotate if other models are left
-        if ((is400 || is403) && model !== "gemini-3.1-pro-preview") {
+        if ((is400 || is403) && model !== "gemini-2.5-pro") {
           if (model !== uniqueModels[uniqueModels.length - 1]) {
             console.log(`[Gemini Shift] Non-transient status ${is400 ? '400' : '403'} on ${model}. Switching to other model...`);
             break;
@@ -533,7 +533,7 @@ app.post("/api/scan", checkGeminiKey, async (req, res) => {
     console.log("Analyzing content with Gemini...");
 
     const response = await generateContentWithRetry({
-      model: "gemini-3.5-flash",
+      model: "gemini-2.5-flash",
       contents: contents,
       config: {
         systemInstruction: systemPrompt,
@@ -638,7 +638,7 @@ app.post("/api/suggest-timetable", checkGeminiKey, async (req, res) => {
     console.log("Generating suggested timetable slots from Gemini...");
 
     const response = await generateContentWithRetry({
-      model: "gemini-3.5-flash",
+      model: "gemini-2.5-flash",
       contents: [
         { text: "Synthesize 5 highly motivational and perfectly tailored study slots for this student's timetable." }
       ],
@@ -720,7 +720,7 @@ app.post("/api/circle-ask", checkGeminiKey, async (req, res) => {
     console.log("Answering Circle-to-Ask with Gemini...");
 
     const response = await generateContentWithRetry({
-      model: "gemini-3.5-flash",
+      model: "gemini-2.5-flash",
       contents: mainPrompt,
       config: {
         systemInstruction: systemInstruction,
@@ -929,7 +929,7 @@ CRITICAL REQUIREMENTS:
 
     console.log("[Chat API] Generating conversation with language detection and latest-turn priority...");
     const response = await generateContentWithRetry({
-      model: "gemini-3.5-flash",
+      model: "gemini-2.5-flash",
       contents: contents,
       config: {
         systemInstruction: systemInstruction,
@@ -999,10 +999,10 @@ app.post("/api/circle-learn", checkGeminiKey, async (req, res) => {
 
     contents.push({ text: textPrompt });
 
-    console.log("[Multimodal API] Processing Circle-to-Learn with model gemini-3.5-flash...");
+    console.log("[Multimodal API] Processing Circle-to-Learn with model gemini-2.5-flash...");
 
     const response = await generateContentWithRetry({
-      model: "gemini-3.5-flash",
+      model: "gemini-2.5-flash",
       contents: contents,
       config: {
         systemInstruction: systemInstruction,
@@ -1070,7 +1070,7 @@ app.post("/api/transcribe", checkGeminiKey, async (req, res) => {
     console.log("Transcribing audio content with Gemini...");
 
     const response = await generateContentWithRetry({
-      model: "gemini-3.5-flash",
+      model: "gemini-2.5-flash",
       contents: [
         {
           inlineData: {
@@ -1124,7 +1124,7 @@ Evaluate the student's explanation against the original master explanation and r
     console.log("Evaluating student Teach-Back explanation with Gemini...");
 
     const response = await generateContentWithRetry({
-      model: "gemini-3.5-flash",
+      model: "gemini-2.5-flash",
       contents: contents,
       config: {
         systemInstruction: systemInstruction,
