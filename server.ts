@@ -166,7 +166,7 @@ async function generateContentWithRetry(params: any, options: { maxRetries?: num
   const { maxRetries = 3, initialDelayMs = 800 } = options;
   let lastError: any = null;
 
-  const uniqueModels = ["gemini-1.5-flash"];
+  model: "gemini-1.5-flash"
 
   for (const model of uniqueModels) {
     let delay = initialDelayMs;
